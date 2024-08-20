@@ -28,8 +28,6 @@ export const authOptions: NextAuthOptions = {
                         email: credentials.email,
                     },
                 });
-                console.log({ L31: user });
-
 
                 if (!user || !(await compare(credentials.password, user.password!))) {
                     return null;
@@ -47,7 +45,8 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         session: ({ session, token }) => {
-            console.log("Session Callback", { session, token });
+            console.log({ L48: session, token });
+
             return {
                 ...session,
                 user: {
@@ -58,7 +57,6 @@ export const authOptions: NextAuthOptions = {
             };
         },
         jwt: ({ token, user }) => {
-            console.log("JWT Callback", { token, user });
             if (user) {
                 const u = user as unknown as any;
                 return {
