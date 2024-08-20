@@ -9,15 +9,15 @@ datasource db {
 }
 
 model angkot {
-  id                               Int          @id
-  passenger_id                     Int?
+  id                               String       @id @default(uuid())
+  passenger_id                     String?
   type                             angkot_type? @default(GOING)
-  car_id                           Int?
-  driver_id                        Int?
+  car_id                           String?
+  driver_id                        String?
   self_car                         Boolean?
   created_at                       DateTime?    @db.Timestamp(6)
   cost                             Int?
-  created_by                       Int?
+  created_by                       String?
   car                              car?         @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users_angkot_created_byTousers   users?       @relation("angkot_created_byTousers", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users_angkot_driver_idTousers    users?       @relation("angkot_driver_idTousers", fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -25,24 +25,26 @@ model angkot {
 }
 
 model car {
-  id         Int       @id
+  id         String    @id @default(uuid())
   title      String?   @db.VarChar
   capacity   Int?
-  owner_id   Int?
+  owner_id   String?
   created_at DateTime? @db.Timestamp(6)
   angkot     angkot[]
   users      users?    @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model users {
-  id                                Int        @id
+  id                                String     @id @default(uuid())
   username                          String?    @db.VarChar
+  name                          String?    @db.VarChar
   role                              String?    @db.VarChar
   password                          String?    @db.VarChar
   phone                             String?    @db.VarChar
+  email                             String     @unique
   created_at                        DateTime?  @db.Timestamp(6)
   type                              user_type? @default(GENERAL)
-  parent                            Int?
+  parent                            String?
   angkot_angkot_created_byTousers   angkot[]   @relation("angkot_created_byTousers")
   angkot_angkot_driver_idTousers    angkot[]   @relation("angkot_driver_idTousers")
   angkot_angkot_passenger_idTousers angkot[]   @relation("angkot_passenger_idTousers")
