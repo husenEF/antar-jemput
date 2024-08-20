@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model angkot {
+  id                               String       @id @default(uuid())
+  passenger_id                     String?
+  type                             angkot_type? @default(GOING)
+  car_id                           String?
+  driver_id                        String?
+  self_car                         Boolean?
+  created_at                       DateTime?    @db.Timestamp(6)
+  cost                             Int?
+  created_by                       String?
+  car                              car?         @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_angkot_created_byTousers   users?       @relation("angkot_created_byTousers", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_angkot_driver_idTousers    users?       @relation("angkot_driver_idTousers", fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_angkot_passenger_idTousers users?       @relation("angkot_passenger_idTousers", fields: [passenger_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model car {
+  id         String    @id @default(uuid())
+  title      String?   @db.VarChar
+  capacity   Int?
+  owner_id   String?
+  created_at DateTime? @db.Timestamp(6)
+  angkot     angkot[]
+  users      users?    @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id                                String     @id @default(uuid())
+  username                          String?    @db.VarChar
+  name                          String?    @db.VarChar
+  role                              String?    @db.VarChar
+  password                          String?    @db.VarChar
+  phone                             String?    @db.VarChar
+  email                             String     @unique
+  created_at                        DateTime?  @db.Timestamp(6)
+  type                              user_type? @default(GENERAL)
+  parent                            String?
+  angkot_angkot_created_byTousers   angkot[]   @relation("angkot_created_byTousers")
+  angkot_angkot_driver_idTousers    angkot[]   @relation("angkot_driver_idTousers")
+  angkot_angkot_passenger_idTousers angkot[]   @relation("angkot_passenger_idTousers")
+  car                               car[]
+  users                             users?     @relation("usersTousers", fields: [parent], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_users                       users[]    @relation("usersTousers")
+}
+
+enum angkot_type {
+  GOING
+  HOMING
+}
+
+enum user_type {
+  PASSENGER
+  DRIVER
+  GENERAL
+}
