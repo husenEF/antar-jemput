@@ -15,7 +15,8 @@ model angkot {
   car_id                           String?
   driver_id                        String?
   self_car                         Boolean?
-  created_at                       DateTime?    @db.Timestamp(6)
+  createdAt                        DateTime     @default(now())
+  updatedAt                        DateTime     @updatedAt
   cost                             Int?
   created_by                       String?
   car                              car?         @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -32,12 +33,14 @@ model car {
   created_at DateTime? @db.Timestamp(6)
   angkot     angkot[]
   users      users?    @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdAt                        DateTime     @default(now())
+  updatedAt                        DateTime     @updatedAt
 }
 
 model users {
   id                                String     @id @default(uuid())
   username                          String?    @db.VarChar
-  name                          String?    @db.VarChar
+  name                              String?    @db.VarChar
   role                              String?    @db.VarChar
   password                          String?    @db.VarChar
   phone                             String?    @db.VarChar
@@ -51,6 +54,8 @@ model users {
   car                               car[]
   users                             users?     @relation("usersTousers", fields: [parent], references: [id], onDelete: NoAction, onUpdate: NoAction)
   other_users                       users[]    @relation("usersTousers")
+  createdAt                         DateTime   @default(now())
+  updatedAt                         DateTime   @updatedAt
 }
 
 enum angkot_type {

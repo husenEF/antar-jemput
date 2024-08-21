@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import clsx from "clsx";
+import { MainProvider } from "@/src/providers/MainProvider";
+import Header from "@/src/components/Header";
 import "./globals.css";
-import { NextAuthProvider } from "@/src/providers/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <NextAuthProvider>{children}</NextAuthProvider>
+      <body className={clsx(inter.className)}>
+        <MainProvider>
+          <Header />
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{children}</div>
+        </MainProvider>
       </body>
     </html>
   );

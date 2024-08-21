@@ -6,7 +6,6 @@ import {
 } from "@/src/components/buttons.component";
 import { authOptions } from "@/src/lib/auth";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -14,6 +13,7 @@ export default async function Home() {
 
   return (
     <main
+      id="page-main"
       style={{
         display: "flex",
         justifyContent: "center",
