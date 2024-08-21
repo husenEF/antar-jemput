@@ -32,12 +32,16 @@ export const authOptions: NextAuthOptions = {
                 if (!user || !(await compare(credentials.password, user.password!))) {
                     return null;
                 }
+                console.log({ l35: user });
 
                 return {
                     id: user.id,
                     email: user.email,
                     name: user.name,
-                    randomKey: "Some random Key",
+                    role: user.role,
+                    phone: user.phone,
+                    type: user.type,
+                    parent: user.parent,
                 };
             },
 

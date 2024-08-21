@@ -14,7 +14,9 @@ const Header: React.FC = async () => {
           <Link href="/">Home</Link>
           {session && (
             <>
-              <Link href="/user">User</Link>
+              <Link href="/user">My Profile</Link>
+              <Link href={"/anak"}>Anak</Link>
+              <Link href={"/kendaraan"}>Kendaraan</Link>
               <Link href="/antar-jemput">Antar Jemput</Link>
             </>
           )}
