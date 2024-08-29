@@ -20,10 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(inter.className)}>
-        <MainProvider>
-          <Header />
-          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{children}</div>
-        </MainProvider>
+        <div id="__next">
+          <MainProvider>
+            <Header />
+            <main className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+              {children}
+            </main>
+          </MainProvider>
+        </div>
       </body>
     </html>
   );
