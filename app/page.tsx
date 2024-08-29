@@ -1,15 +1,11 @@
-import {
-  LoginButton,
-  LogoutButton,
-  ProfileButton,
-  RegisterButton,
-} from "@/src/components/buttons.component";
 import { authOptions } from "@/src/lib/auth";
-import { getServerSession } from "next-auth";
+import { auth, currentUser } from "@clerk/nextjs/server";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-  console.log({ L13: session });
+  const authData = await auth();
+  const currentUserData = await currentUser();
+
+  console.log({ authData, currentUserData });
 
   return (
     <main
@@ -21,12 +17,8 @@ export default async function Home() {
         height: "70vh",
       }}>
       <div>
-        <LoginButton />
-        <RegisterButton />
-        <LogoutButton />
-        <ProfileButton />
         <h1>Server Session</h1>
-        <pre>{JSON.stringify(session)}</pre>
+        <pre>{JSON.stringify({})}</pre>
       </div>
     </main>
   );

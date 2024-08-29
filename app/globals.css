@@ -15,7 +15,18 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
+html {
+  @apply h-full;
+}
+body {
+  @apply h-full;
+}
+div#__next {
+  @apply h-full;
+}
+main {
+  @apply h-full;
+}
 /* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
+
 import { Inter } from "next/font/google";
 import clsx from "clsx";
 import { MainProvider } from "@/src/providers/MainProvider";
 import Header from "@/src/components/Header";
+import ErrorBoundary from "@/src/components/errorBoundary";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,13 +21,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={clsx(inter.className)}>
-        <MainProvider>
-          <Header />
-          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{children}</div>
-        </MainProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={clsx(inter.className)}>
+          <ErrorBoundary>
+            <Header />
+            <main className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+              {children}
+            </main>
+          </ErrorBoundary>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
