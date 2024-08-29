@@ -24,14 +24,3 @@ export async function POST(request: Request) {
         }
     })
 }
-
-export async function DELETE(request: Request, params) {
-    const requestBody = await request.json()
-    console.log({ L30: params });
-
-    return new Response(JSON.stringify(requestBody), {
-        headers: {
-            'content-type': 'application/json'
-        }
-    })
-}
