@@ -7,9 +7,12 @@ import {
 import { authOptions } from "@/src/lib/auth";
 import { getServerSession } from "next-auth";
 
+
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  console.log({ L13: session });
+  
+  
+  console.log({ L13: session?.expires });
 
   return (
     <main

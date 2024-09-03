@@ -47,8 +47,9 @@ export const authOptions: NextAuthOptions = {
 
         }),
     ],
+
     callbacks: {
-        session: ({ session, token }) => {
+        async session({ session, token }) {
             console.log({ L48: session, token });
 
             return {
@@ -60,7 +61,7 @@ export const authOptions: NextAuthOptions = {
                 },
             };
         },
-        jwt: ({ token, user }) => {
+        async jwt({ token, user }) {
             if (user) {
                 const u = user as unknown as any;
                 return {
